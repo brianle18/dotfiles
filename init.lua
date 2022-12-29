@@ -1,0 +1,8 @@
+require("base.format")
+require("base.search")
+require("base.plugins")
+require("base.colours")
+require("base.mappings")
+require("base.vimtex")
+require("base.coc")
+require("base.ts")
