@@ -28,7 +28,9 @@ function(use)
     use 'will133/vim-dirdiff'
 
     -- commenting <,>Commentary
+    -- \cc
     use 'tpope/vim-commentary'
+    use 'preservim/nerdcommenter'
 
     -- Changing surronding using c<OLD><NEW>
     -- Autoclose
@@ -57,6 +59,26 @@ function(use)
     use 'nvim-treesitter/playground'
     -- use 'preservim/tagbar'
 
+    -- Linter
+    use 'dense-analysis/ale'
+
+    -- Trailing whitespace (missing from ALE)
+    use { 'lukoshkin/trailing-whitespace',
+           config = function ()
+              require'trailing-whitespace'.setup {
+                 patterns = { '\\s\\+$' },
+                 palette = { markdown = 'RosyBrown' },
+                 default_color = 'PaleVioletRed',
+              }
+           end
+        }
+
     -- Undo
     use 'mbbill/undotree'
+
+    -----------------------
+    -- LANGUAGE-SPECIFIC --
+    -----------------------
+    use {'python-mode/python-mode', branch='develop'}
+    use 'jeetsukumaran/vim-pythonsense'
 end)

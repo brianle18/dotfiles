@@ -26,8 +26,11 @@ o.smarttab  = true
 o.shiftwidth=4
 o.softtabstop=4
 
-
-----------------
--- Appearance --
-----------------
--- wo.rnu
+-- ALE for linting
+-- disable LSP (handled by TS and COC)
+-- Use autopep8
+g.ale_disable_lsp = 1
+g.ale_sign_column_always = 1
+g.ale_fixers = {python = { 'autopep8' }}
+-- old vim command cos idk how to do * FIXME
+vim.cmd("let b:ale_fixers = { '*': ['remove_trailing_lines', 'trim_whitespace'], 'python': ['autopep8'], }")

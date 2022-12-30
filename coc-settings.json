@@ -1,0 +1,10 @@
+{
+    "pyright.enable": true,
+    "python.linting.enabled": false,
+    "python.formatting.provider": "autopep8",
+    "python.formatting.autopep8Path": "/opt/homebrew/bin/autopep8",
+    "diagnostic.displayByAle": true,
+    "highlight.colorNames.enable": true,
+    "highlight.colors.enable": true,
+    "highlight.trace": "messages",
+}
