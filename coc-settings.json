@@ -7,4 +7,9 @@
     "highlight.colorNames.enable": true,
     "highlight.colors.enable": true,
     "highlight.trace": "messages",
+    "diagnostic.virtualText": "false",
+    "diagnostic.virtualTextCurrentLineOnly": "true",
+    "diagnostic.enableMessage": "jump",
+    "//pyright.inlayHints.variableTypes": false,
+    "//pyright.inlayHints.functionReturnTypes": false
 }

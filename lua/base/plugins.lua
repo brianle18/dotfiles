@@ -9,6 +9,7 @@ function(use)
     -- Colourscheme
     use 'sainnhe/gruvbox-material'
     -- use 'eddyekofo94/gruvbox-flat.nvim'
+    use 'norcalli/nvim-colorizer.lua'
 
     -- Airline themes
     use 'vim-airline/vim-airline'
@@ -49,7 +50,7 @@ function(use)
             },
             tag = 'nightly' -- optional, updated every week. (see issue #1193)
         }
-    
+
     -- Markdown renderer
     use 'ellisonleao/glow.nvim'
 
@@ -75,6 +76,10 @@ function(use)
 
     -- Undo
     use 'mbbill/undotree'
+
+    -- Alternative searching
+    use {'junegunn/fzf', dir = '~/.fzf', run = './install --all' }
+    use 'jremmen/vim-ripgrep'
 
     -----------------------
     -- LANGUAGE-SPECIFIC --
