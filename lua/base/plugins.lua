@@ -42,6 +42,7 @@ function(use)
 
     -- Latex support
     use 'lervag/vimtex'
+    -- use 'matze/vim-tex-fold'
 
     -- File viewer
     use { 'nvim-tree/nvim-tree.lua',

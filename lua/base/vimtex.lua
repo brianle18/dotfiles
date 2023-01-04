@@ -10,3 +10,7 @@ g.vimtex_compiler_method = 'latexmk'
 g.vimtex_compiler_enabled=1
 -- FIXME hack, no clue what's wrong
 vim.cmd("let g:vimtex_compiler_latexmk = { 'callback' : 0, 'build_dir' : 'build', 'options' : [ '-verbose', '-file-line-error', '-synctex=1', '-interaction=nonstopmode', '-shell-escape' ], }")
+
+g.tex_fold_enabled = 0
+g.vimtex_fold_enabled = 1
+vim.cmd("let g:vimtex_fold_types = { 'sections': {'enabled': 0}, 'envs' : {'blacklist': ['chapter', 'section', 'subsection']}}")
