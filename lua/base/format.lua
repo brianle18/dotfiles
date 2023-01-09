@@ -26,6 +26,9 @@ o.smarttab  = true
 o.shiftwidth=4
 o.softtabstop=4
 
+-- copy to clipboard
+-- vim.cmd("set clipboard+=unnamedplus")
+
 -- ALE for linting
 -- disable LSP (handled by TS and COC)
 -- Use autopep8
