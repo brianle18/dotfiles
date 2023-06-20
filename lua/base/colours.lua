@@ -16,6 +16,33 @@ vim.cmd("colorscheme gruvbox-material")
 -- o.termguicolors = true
 -- g.gruvbox_flat_style = 'hard'
 -- vim.cmd("colorscheme gruvbox-flat")
+vim.api.nvim_set_hl(0, "@text.note", {link = "@text.todo"})
+require("todo-comments").setup{
+    signs= true,
+    highlight = {
+        before = "", -- "fg" or "bg" or empty
+        keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
+        after = "fg" -- "fg" or "bg" or empty
+    },
+    keywords = {
+        BUG = "FIX",
+        FIX = "FIX",
+        FIXIT = "FIX",
+        FIXME = "FIX",
+        HACK = "HACK",
+        INFO = "NOTE",
+        ISSUE = "FIX",
+        NOTE = "NOTE",
+        OPTIM = "PERF",
+        OPTIMIZE = "PERF",
+        PERF = "PERF",
+        PERFORMANCE = "PERF",
+        TODO = "TODO",
+        WARN = "WARN",
+        WARNING = "WARN",
+        XXX = "WARN"
+      },
+}
 
 -- Airline themes
 

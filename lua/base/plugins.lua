@@ -3,6 +3,11 @@
 ---------------------
 
 vim.cmd [[packadd packer.nvim]]
+require("packer").init({
+    git = {
+        clone_timeout = 120, -- Timeout, in seconds, for git clones
+    }
+})
 
 return require('packer').startup(
 function(use)
@@ -32,6 +37,12 @@ function(use)
     -- \cc
     use 'tpope/vim-commentary'
     use 'preservim/nerdcommenter'
+
+    -- Highlighting commentary
+    use { 'folke/todo-comments.nvim',
+            requires = { { "nvim-lua/plenary.nvim" } },
+            cmd = {"TodoQuickFix", "TodoTrouble", "TodoTelescope"}
+        }
 
     -- Changing surronding using c<OLD><NEW>
     -- Autoclose
@@ -64,13 +75,16 @@ function(use)
     -- Linter
     use 'dense-analysis/ale'
 
+    -- Test tabnine
+    use { 'codota/tabnine-vim', run = './dl_binaries.sh' }
+
     -- Trailing whitespace (missing from ALE)
-    use { 'lukoshkin/trailing-whitespace',
+    use { 'lukoshkin/highlight-whitespace',
            config = function ()
-              require'trailing-whitespace'.setup {
-                 patterns = { '\\s\\+$' },
-                 palette = { markdown = 'RosyBrown' },
-                 default_color = 'PaleVioletRed',
+              require'highlight-whitespace'.setup {
+                 tws = '\\s\\+$',
+                 markdown = { tws = 'RosyBrown' },
+                 other = { tws = 'PaleVioletRed' },
               }
            end
         }

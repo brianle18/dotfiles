@@ -36,5 +36,6 @@ g.ale_disable_lsp = 1
 g.ale_sign_column_always = 1
 g.ale_virtualtext_cursor = 0 -- disable the virtualtext
 g.ale_fixers = {python = { 'autopep8' }}
+g.ale_python_flake8_options = '--max-line-length=120'
 -- old vim command cos idk how to do * FIXME
 vim.cmd("let b:ale_fixers = { '*': ['remove_trailing_lines', 'trim_whitespace'], 'python': ['autopep8'], }")
