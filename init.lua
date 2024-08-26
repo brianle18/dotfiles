@@ -1,13 +1,16 @@
 require("base.plugins")
+require("base.colours")
+require("base.frontend")
+require("base.elixir")
+require("base.snippet")
 require("base.format")
 require("base.search")
-require("base.colours")
 require("base.mappings")
 require("base.vimtex")
 require("base.coc")
 require("base.ts")
 require("base.languages")
---require("base.autocomplete")
+require("base.autocomplete")
 
 ---- Testing
 --local Plug = vim.fn['plug#']

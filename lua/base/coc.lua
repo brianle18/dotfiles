@@ -46,10 +46,10 @@ keyset("n", "[g", "<Plug>(coc-diagnostic-prev)", {silent = true})
 keyset("n", "]g", "<Plug>(coc-diagnostic-next)", {silent = true})
 
 -- GoTo code navigation
-keyset("n", "gd", "<Plug>(coc-definition)", {silent = true})
-keyset("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
-keyset("n", "gi", "<Plug>(coc-implementation)", {silent = true})
-keyset("n", "gr", "<Plug>(coc-references)", {silent = true})
+keyset("n", "<leader>gd", "<Plug>(coc-definition)", {silent = true})
+keyset("n", "<leader>gy", "<Plug>(coc-type-definition)", {silent = true})
+keyset("n", "<leader>gi", "<Plug>(coc-implementation)", {silent = true})
+keyset("n", "<leader>gr", "<Plug>(coc-references)", {silent = true})
 
 
 -- Use K to show documentation in preview window
@@ -147,7 +147,6 @@ keyset("i", "<C-b>",
        'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"', opts)
 keyset("v", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', opts)
 keyset("v", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', opts)
-
 
 -- Use CTRL-S for selections ranges
 -- Requires 'textDocument/selectionRange' support of language server
