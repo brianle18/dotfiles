@@ -1,6 +1,26 @@
 require('nvim-treesitter.configs').setup {
   -- A list of parser names, or "all"
-  ensure_installed = { "c", "cpp", "python", "lua", "latex", "help", "r"},
+  ensure_installed = {
+      "c",
+      "cpp",
+      "python",
+      "lua",
+      "latex",
+      "help",
+      "r",
+      "markdown",
+      "markdown_inline",
+      "comment",
+      "elixir",
+      "heex",
+      "eex",
+      "html",
+      "css",
+      "javascript",
+      "typescript",
+      "tsx",
+      "css"
+  },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -10,7 +30,7 @@ require('nvim-treesitter.configs').setup {
   auto_install = true,
 
   -- List of parsers to ignore installing (for "all")
-  ignore_install = { "javascript", "help"},
+  ignore_install = {"help"},
 
   ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
   -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
@@ -40,6 +60,16 @@ require('nvim-treesitter.configs').setup {
     additional_vim_regex_highlighting = false,
   },
 
+  -- For contextual commenting in react
+  context_commentstring = {
+    enable = true,
+    enable_autocmd = false,
+    commentary_integration = {
+      -- disable default mapping
+      CommentaryLine = false,
+    },
+  },
+
   rainbow = {
     enable = true,
     -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
@@ -49,3 +79,9 @@ require('nvim-treesitter.configs').setup {
     -- termcolors = {} -- table of colour name strings
   }
 }
+
+-- Instead of commentary
+require('Comment').setup {
+  pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+}
+vim.g.skip_ts_context_commentstring_module = true

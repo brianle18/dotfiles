@@ -1,5 +1,7 @@
 {
     "pyright.enable": true,
+    "python.pythonVersion": "3.11",
+    "python.pythonPath": "/opt/homebrew/bin/python3.11",
     "python.linting.enabled": false,
     "python.formatting.provider": "autopep8",
     "python.formatting.autopep8Path": "/opt/homebrew/bin/autopep8",
@@ -7,9 +9,18 @@
     "highlight.colorNames.enable": true,
     "highlight.colors.enable": true,
     "highlight.trace": "messages",
-    "diagnostic.virtualText": "false",
-    "diagnostic.virtualTextCurrentLineOnly": "true",
+    "diagnostic.virtualText": false,
+    "diagnostic.virtualTextCurrentLineOnly": true,
     "diagnostic.enableMessage": "jump",
-    "//pyright.inlayHints.variableTypes": false,
-    "//pyright.inlayHints.functionReturnTypes": false
+    "elixir.pathToElixirLS": "/Users/brianle/.elixir-ls/release/language_server.sh",
+    "languageserver": {
+      "graphql": {
+        "command": "graphql-lsp",
+        "args": ["server", "-m", "stream"],
+        "filetypes": ["typescript", "typescriptreact", "graphql"],
+        "settings": {
+            "graphql-config.load.legacy": true
+        }
+      }
+    }
 }
