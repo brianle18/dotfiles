@@ -1,7 +1,6 @@
 {
     "pyright.enable": true,
-    "python.pythonVersion": "3.11",
-    "python.pythonPath": "/opt/homebrew/bin/python3.11",
+    "python.pythonPath": "/opt/homebrew/Caskroom/miniforge/base/bin/python3",
     "python.linting.enabled": false,
     "python.formatting.provider": "autopep8",
     "python.formatting.autopep8Path": "/opt/homebrew/bin/autopep8",
@@ -13,6 +12,10 @@
     "diagnostic.virtualTextCurrentLineOnly": true,
     "diagnostic.enableMessage": "jump",
     "elixir.pathToElixirLS": "/Users/brianle/.elixir-ls/release/language_server.sh",
+    "elixir.fetchDeps": false,
+    "Lua.diagnostics.globals": ["vim"],
+    "sql.database": "postgresql",
+    "sqlfluff.dialect": "postgres",
     "languageserver": {
       "graphql": {
         "command": "graphql-lsp",

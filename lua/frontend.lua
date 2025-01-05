@@ -1,3 +1,4 @@
+-- Some frontend specific plugins
 local null_ls = require("null-ls")
 
 -- nx actions for codegen

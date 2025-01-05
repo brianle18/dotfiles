@@ -12,3 +12,5 @@ vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', { expr = true, replace_
 vim.g.copilot_no_tab_map = true
 -- require("copilot").setup()
 -- support@psychhelp.com.au
+--
+vim.g.vim_textobj_elixir_mapping = 'e'
