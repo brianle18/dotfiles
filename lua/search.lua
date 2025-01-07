@@ -2,6 +2,7 @@
 -- Search functionality
 ---------------------------------------------
 
+-- Basic functionality
 local o = vim.o
 local g = vim.g
 
@@ -22,32 +23,42 @@ g.nvim_tree_respect_buf_cwd = 1
 -- Telescope mappings
 local telescope = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", telescope.find_files, {})
-vim.keymap.set("n", "<leader>fg", telescope.live_grep, {})
+vim.keymap.set("n", "<leader>fg", require("telescope_multigrep"), {})
 vim.keymap.set("n", "<leader>fw", telescope.grep_string, {})
 vim.keymap.set("n", "<leader>fb", telescope.buffers, {})
 vim.keymap.set("n", "<leader>fh", telescope.help_tags, {})
 vim.keymap.set("n", "<leader>fc", telescope.commands, {})
 vim.keymap.set("n", "<leader>fr", telescope.lsp_definitions, {})
 vim.keymap.set("n", "<leader>fr", telescope.lsp_references, {})
+vim.keymap.set("n", "<leader>fn", "<cmd>Telescope notify<CR>", {})
+vim.keymap.set("n", "<leader>fa", "<cmd>lua vim.lsp.buf.code_action()<CR>", {})
+-- code actions
+require("telescope").setup({
+    extensions = {
+        ["ui-select"] = {
+            require("telescope.themes").get_dropdown({
+                -- even more opts
+            }),
 
--- Notify
-local notify = require("notify")
-vim.lsp.handlers["window/showMessage"] = function(_, result, ctx)
-    local client = vim.lsp.get_client_by_id(ctx.client_id)
-    local lvl = ({
-        "ERROR",
-        "WARN",
-        "INFO",
-        "DEBUG",
-    })[result.type]
-    notify({ result.message }, lvl, {
-        title = "LSP | " .. client.name,
-        timeout = 10000,
-        keep = function()
-            return lvl == "ERROR" or lvl == "WARN"
-        end,
-    })
-end
+            -- pseudo code / specification for writing custom displays, like the one
+            -- for "codeactions"
+            -- specific_opts = {
+            --   [kind] = {
+            --     make_indexed = function(items) -> indexed_items, width,
+            --     make_displayer = function(widths) -> displayer
+            --     make_display = function(displayer) -> function(e)
+            --     make_ordinal = function(e) -> string
+            --   },
+            --   -- for example to disable the custom builtin "codeactions" display
+            --      do the following
+            --   codeactions = false,
+            -- }
+        },
+    },
+})
+-- To get ui-select loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+require("telescope").load_extension("ui-select")
 
 -- Nvim-tree
 -- disable netrw at the very start of your init.lua (strongly advised)

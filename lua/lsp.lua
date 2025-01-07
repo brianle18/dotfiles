@@ -52,6 +52,18 @@ require("lspconfig").ts_ls.setup({
 
 -- Python
 require("lspconfig").pyright.setup({
+    settings = {
+        cmd = { "/opt/homebrew/Caskroom/miniforge/base/envs/notebooks/bin/pyright-langserver", "--stdio" },
+    },
+    filetypes = { "python" },
+    on_attach = on_attach,
+    capabilities = capabilities,
+})
+
+require("lspconfig").ruff.setup({
+    settings = {
+        cmd = { "/opt/homebrew/Caskroom/miniforge/base/envs/notebooks/bin/ruff", "server" },
+    },
     filetypes = { "python" },
     on_attach = on_attach,
     capabilities = capabilities,
@@ -68,3 +80,25 @@ require("lspconfig").lua_ls.setup({
     },
     capabilities = capabilities,
 })
+
+-- HTML
+require("lspconfig").html.setup({
+    capabilities = capabilities,
+    on_attach = on_attach,
+})
+
+-- SQL
+-- local util = require("lspconfig.util")
+-- local lspconfig = require("lspconfig")
+
+-- require("lspconfig.configs").postgres_lsp = {
+--     default_config = {
+--         name = "postgres_lsp",
+--         cmd = { "postgres_lsp" },
+--         filetypes = { "sql" },
+--         single_file_support = true,
+--         root_dir = util.root_pattern("root-file.txt"),
+--     },
+-- }
+
+-- lspconfig.postgres_lsp.setup({ force_setup = true })

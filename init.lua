@@ -8,6 +8,8 @@ require("lsp")
 require("coc")
 require("ts")
 require("search")
+require("telescope_multigrep")
+require("lualine_python")
 require("format")
 require("snippet")
 -- language specific configs

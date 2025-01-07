@@ -36,6 +36,7 @@ require("lazy").setup({
 
     -- Telescope,
     { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+    { "nvim-telescope/telescope-ui-select.nvim", dependencies = { "nvim-telescope/telescope.nvim" } },
 
     -- Easy-align,
     "junegunn/vim-easy-align",
@@ -59,7 +60,7 @@ require("lazy").setup({
     {
         "folke/todo-comments.nvim",
         dependencies = { { "nvim-lua/plenary.nvim" } },
-        cmd = { "TodoList", "TodoQuickFix", "TodoTrouble", "TodoTelescope" },
+        opts = {},
     },
 
     -- Changing surronding using c<OLD><NEW>
