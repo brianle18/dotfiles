@@ -43,18 +43,21 @@ require("lspconfig").elixirls.setup({
     capabilities = capabilities,
 })
 
+-- TypeScript
 require("lspconfig").ts_ls.setup({
     filetypes = { "typescript", "typescriptreact" },
     on_attach = on_attach,
     capabilities = capabilities,
 })
 
+-- Python
 require("lspconfig").pyright.setup({
     filetypes = { "python" },
     on_attach = on_attach,
     capabilities = capabilities,
 })
 
+-- Lua
 require("lspconfig").lua_ls.setup({
     settings = {
         Lua = {

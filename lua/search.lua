@@ -23,8 +23,31 @@ g.nvim_tree_respect_buf_cwd = 1
 local telescope = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", telescope.find_files, {})
 vim.keymap.set("n", "<leader>fg", telescope.live_grep, {})
+vim.keymap.set("n", "<leader>fw", telescope.grep_string, {})
 vim.keymap.set("n", "<leader>fb", telescope.buffers, {})
 vim.keymap.set("n", "<leader>fh", telescope.help_tags, {})
+vim.keymap.set("n", "<leader>fc", telescope.commands, {})
+vim.keymap.set("n", "<leader>fr", telescope.lsp_definitions, {})
+vim.keymap.set("n", "<leader>fr", telescope.lsp_references, {})
+
+-- Notify
+local notify = require("notify")
+vim.lsp.handlers["window/showMessage"] = function(_, result, ctx)
+    local client = vim.lsp.get_client_by_id(ctx.client_id)
+    local lvl = ({
+        "ERROR",
+        "WARN",
+        "INFO",
+        "DEBUG",
+    })[result.type]
+    notify({ result.message }, lvl, {
+        title = "LSP | " .. client.name,
+        timeout = 10000,
+        keep = function()
+            return lvl == "ERROR" or lvl == "WARN"
+        end,
+    })
+end
 
 -- Nvim-tree
 -- disable netrw at the very start of your init.lua (strongly advised)

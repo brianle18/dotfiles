@@ -1,3 +1,4 @@
+-- Luasnip setup
 require("luasnip.loaders.from_vscode").lazy_load()
 local ls = require("luasnip")
 vim.keymap.set({ "i" }, "<C-K>", function()
@@ -25,6 +26,7 @@ end
 local luasnip = require("luasnip")
 local cmp = require("cmp")
 
+-- Integrate with CMP
 cmp.setup({
     snippet = {
         expand = function(args)
@@ -67,8 +69,6 @@ cmp.setup({
                 fallback()
             end
         end, { "i", "s" }),
-
-        -- ... Your other mappings ...
     }),
     sources = cmp.config.sources({
         { name = "copilot" },
@@ -76,24 +76,6 @@ cmp.setup({
         { name = "luasnip" }, -- For luasnip users.
     }, {
         { name = "buffer" },
+        { name = "vim-dadbod-completion" },
     }),
-
-    -- ... Your other configuration ...
-})
--- cmp.setup.filetype({ "sql" }, {
---     sources = {
---         { name = "vim-dadbod-completion" },
---         { name = "nvim_lsp" },
---         { name = "buffer" },
---     },
--- })
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "sql", "mysql", "plsql" },
-    callback = function()
-        cmp.setup.buffer({
-            sources = {
-                { name = "vim-dadbod-completion" },
-            },
-        })
-    end,
 })

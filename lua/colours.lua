@@ -10,15 +10,11 @@ local g = vim.g
 -- Available values: 'hard', 'medium'(default), 'soft'
 -- For better performance
 o.background = "dark"
-g.gruvbox_material_background = 'hard'
+g.gruvbox_material_background = "hard"
 g.gruvbox_material_better_performance = 1
-g.gruvbox_material_diagnostic_virtual_text = 'colored'
+g.gruvbox_material_diagnostic_virtual_text = "colored"
 vim.cmd("colorscheme gruvbox-material")
--- For diagnostic lines
-local keyset = vim.keymap.set
-vim.diagnostic.config({ virtual_text = false })
-keyset("n", "<leader>tl", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+
 -- Airline themes
-
-g.airline_theme = 'ayu_dark'
-
+-- g.airline_theme = 'ayu_dark'
+require("lualine").setup({ options = { theme = "gruvbox-material" } })

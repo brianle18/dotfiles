@@ -20,6 +20,7 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
+-- TODO migrate specs to individual files
 require("lazy").setup({
     { "wbthomason/packer.nvim" },
     -- Colourscheme
@@ -27,9 +28,11 @@ require("lazy").setup({
     "folke/tokyonight.nvim",
     "norcalli/nvim-colorizer.lua",
 
-    -- Airline themes,
-    "vim-airline/vim-airline",
-    "vim-airline/vim-airline-themes",
+    -- Line themes,
+    {
+        "nvim-lualine/lualine.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+    },
 
     -- Telescope,
     { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
@@ -68,7 +71,6 @@ require("lazy").setup({
 
     -- Latex support
     "lervag/vimtex",
-    -- 'matze/vim-tex-fold'
 
     -- File viewer
     {
@@ -82,6 +84,8 @@ require("lazy").setup({
             require("nvim-tree").setup({})
         end,
     },
+
+    -- Alternative (ranger style)
     {
         "stevearc/oil.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -125,13 +129,11 @@ require("lazy").setup({
             require("lsp_lines").setup()
         end,
     },
+
+    -- Formatters
     "jose-elias-alvarez/null-ls.nvim",
     "MunifTanjim/prettier.nvim",
-    -- 'preservim/tagbar'
-
-    -- Embedded languages
     "stevearc/conform.nvim",
-    -- use({"dariuscorvus/tree-sitter-language-injection.nvim", after="nvim-treesitter"})
 
     -- cmp framework for auto-completion support
     { "hrsh7th/nvim-cmp" },
@@ -145,42 +147,29 @@ require("lazy").setup({
     { "hrsh7th/cmp-nvim-lsp" },
     { "hrsh7th/cmp-buffer" },
     { "hrsh7th/cmp-path" },
+    { "hrsh7th/cmp-omni" },
     { "hrsh7th/cmp-cmdline" },
-    -- {'tzachar/cmp-tabnine', run='./install.sh', dependencies = 'hrsh7th/nvim-cmp'}
-    --
 
     -- snippets
     { "L3MON4D3/LuaSnip", run = "make install_jsregexp" },
     { "saadparwaiz1/cmp_luasnip" },
 
-    -- Linter
-    "dense-analysis/ale",
-
     -- Bracketing
     { "tpope/vim-unimpaired" },
 
-    -- Test AI
-    -- { 'codota/tabnine-vim', run = './dl_binaries.sh' }
+    -- Copilot
     { "github/copilot.vim" },
-    -- { "zbirenbaum/copilot.lua",
-    --     cmd = "Copilot",
-    --     event = "InsertEnter",
-    --     config = function() require("copilot").setup() end
-    -- }
-    -- { "zbirenbaum/copilot-cmp",
-    --         after = { "copilot.lua" },
-    --         config = function () require("copilot_cmp").setup()
-    --       end
-    --     }
 
-    -- Trailing whitespace (missing from ALE)
+    -- Trailing whitespace
     {
         "lukoshkin/highlight-whitespace",
         config = function()
             require("highlight-whitespace").setup({
                 tws = "\\s\\+$",
-                markdown = { tws = "RosyBrown" },
-                other = { tws = "PaleVioletRed" },
+                palette = {
+                    markdown = { tws = "RosyBrown" },
+                    other = { tws = "PaleVioletRed" },
+                },
             })
         end,
     },
@@ -189,8 +178,18 @@ require("lazy").setup({
     "mbbill/undotree",
 
     -- Alternative searching
-    -- {'junegunn/fzf', dir = '~/.fzf', build = './install --all' },
     "jremmen/vim-ripgrep",
+
+    -- Debugging
+    {
+        "rcarriga/nvim-notify",
+        config = function()
+            vim.notify = require("notify")
+            vim.notify.setup({
+                background_colour = "#000000",
+            })
+        end,
+    },
 
     -----------------------
     -- LANGUAGE-SPECIFIC --
@@ -214,7 +213,9 @@ require("lazy").setup({
             { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true }, -- Optional },
         },
     },
-    -- elixir objects and formatting
+    { "vim-scripts/dbext.vim" },
+
+    -- Elixir objects and formatting
     -- something wrong here
     -- { "kana/vim-textobj-user", init = function() end },
     -- { "andyl/vim-textobj-elixir" },
