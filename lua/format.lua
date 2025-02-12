@@ -30,6 +30,9 @@ require("conform").setup({
     formatters_by_ft = {
         lua = { "stylua" },
         sql = { "sqlfluff" },
+        json = { "jq" },
+        elixir = { "mix" },
+        python = { "ruff_format" },
         ["*"] = { "injected", "trim_whitespace", "remove_trailing_lines" }, -- enables injected-lang formatting for all filetypes
     },
     format_on_save = {
@@ -45,9 +48,14 @@ require("conform").setup({
         },
         sqlfluff = {
             command = "/opt/homebrew/Caskroom/miniforge/base/bin/sqlfluff",
-            args = { "format", "-", "--dialect", "postgres" },
+            args = { "format", "-", "--dialect", "postgres", "--ignore", "templating" },
             require_cwd = false,
             inherit = false,
+        },
+        mix = {
+            command = "mix",
+            args = { "format", "-" },
+            cwd = require("conform.util").root_file({ ".envrc" }),
         },
     },
 })

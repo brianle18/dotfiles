@@ -22,7 +22,6 @@ vim.opt.rtp:prepend(lazypath)
 
 -- TODO migrate specs to individual files
 require("lazy").setup({
-    { "wbthomason/packer.nvim" },
     -- Colourscheme
     "sainnhe/gruvbox-material",
     "folke/tokyonight.nvim",
@@ -101,6 +100,7 @@ require("lazy").setup({
     },
     {
         "iamcco/markdown-preview.nvim",
+        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
         build = "cd app && npm install",
         init = function()
             vim.g.mkdp_filetypes = { "markdown" }
@@ -117,13 +117,24 @@ require("lazy").setup({
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
     },
+    { "m-novikov/tree-sitter-sql" },
     {
         "neovim/nvim-lspconfig",
         lazy = {
             inlay_hints = { enabled = false },
         },
     },
-    -- Format into lines
+
+    -- Linter
+    {
+        "mfussenegger/nvim-lint",
+        event = {
+            "BufReadPre",
+            "BufNewFile",
+        },
+    },
+
+    -- Diagnostics into lines
     {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         config = function()
@@ -136,13 +147,13 @@ require("lazy").setup({
     "MunifTanjim/prettier.nvim",
     "stevearc/conform.nvim",
 
-    -- cmp framework for auto-completion support
-    { "hrsh7th/nvim-cmp" },
-
     {
         "nvim-treesitter/nvim-treesitter-textobjects",
         dependencies = "nvim-treesitter/nvim-treesitter",
     },
+
+    -- cmp framework for auto-completion support
+    { "hrsh7th/nvim-cmp" },
 
     -- install different completion source
     { "hrsh7th/cmp-nvim-lsp" },
@@ -195,9 +206,6 @@ require("lazy").setup({
     -----------------------
     -- LANGUAGE-SPECIFIC --
     -----------------------
-    { "python-mode/python-mode", branch = "develop" },
-    "jeetsukumaran/vim-pythonsense",
-
     -- Graphiql codegen
     {
         "Equilibris/nx.nvim",
@@ -205,13 +213,14 @@ require("lazy").setup({
             "nvim-telescope/telescope.nvim",
         },
     },
+
     -- SQL
-    { "tpope/vim-dadbod" },
+    { "tpope/vim-dadbod", lazy = false },
     {
         "kristijanhusak/vim-dadbod-ui",
         dependencies = {
-            { "tpope/vim-dadbod", lazy = true },
-            { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true }, -- Optional },
+            { "tpope/vim-dadbod", lazy = false },
+            { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = false }, -- Optional },
         },
     },
     { "vim-scripts/dbext.vim" },

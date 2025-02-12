@@ -2,9 +2,10 @@ require("plugins")
 -- looks and functionality
 require("colours")
 require("mappings")
-require("debug")
+require("diag")
 -- code parsing/actions
 require("lsp")
+require("linting")
 require("coc")
 require("ts")
 require("search")

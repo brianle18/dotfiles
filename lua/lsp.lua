@@ -10,7 +10,7 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>gca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>cf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>cd", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
@@ -22,9 +22,19 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- Installer for LSP servers
 require("mason").setup()
+require("mason-lspconfig").setup({
+    ensure_installed = {
+        "elixirls",
+        "ts_ls",
+        "pyright",
+        "ruff",
+        "html",
+        "eslint",
+        "lua_ls",
+    },
+})
 
 -- LSP configs
-
 -- Elixir
 -- you have to manually specify the entrypoint cmd for elixir-ls
 require("lspconfig").elixirls.setup({
@@ -88,6 +98,21 @@ require("lspconfig").html.setup({
 })
 
 -- SQL
+require("lspconfig").sqlls.setup({
+    filetypes = { "sql" },
+    settings = {
+        adapter = "postgres",
+    },
+    capabilities = capabilities,
+    on_attach = on_attach,
+})
+
+-- Vimscript
+require("lspconfig").vimls.setup({
+    filetypes = { "vim" },
+    capabilities = capabilities,
+    on_attach = on_attach,
+})
 -- local util = require("lspconfig.util")
 -- local lspconfig = require("lspconfig")
 
@@ -102,3 +127,10 @@ require("lspconfig").html.setup({
 -- }
 
 -- lspconfig.postgres_lsp.setup({ force_setup = true })
+
+-- vim.api.nvim_create_autocmd("FileType", {
+--     pattern = "sql",
+--     callback = function()
+--         vim.bo.omnifunc = "vim_dadbod_completion#omni"
+--     end,
+-- })

@@ -1,7 +1,10 @@
 -- For diagnostic lines
 local keyset = vim.keymap.set
 vim.diagnostic.config({ virtual_text = false })
-keyset("n", "<leader>tl", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+keyset("n", "<leader>ll", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+vim.keymap.set("n", "<Space>d", function()
+    vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { silent = true, noremap = true, desc = "Toggle diagnostics" })
 
 -- Notify
 local notify = require("notify")

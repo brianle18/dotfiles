@@ -7,7 +7,7 @@ require("nx").setup({
     form_renderer = require("nx.form-renderers").telescope(),
     read_init = true,
 })
-vim.keymap.set("n", "<leader>nx", "<cmd>Telescope nx actions<CR>")
+vim.keymap.set("n", "<leader>nx", "<cmd>Telescope nx actions<CR>", { desc = "Run nx actions (Telescope)" })
 
 local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
 local event = "BufWritePre" -- or "BufWritePost"
@@ -29,14 +29,14 @@ null_ls.setup({
                 callback = function()
                     vim.lsp.buf.format({ bufnr = bufnr, async = async })
                 end,
-                desc = "[lsp] format on save",
+                desc = "LSP format on save",
             })
         end
 
         if client.supports_method("textDocument/rangeFormatting") then
             vim.keymap.set("x", "<Leader>f", function()
                 vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-            end, { buffer = bufnr, desc = "[lsp] format" })
+            end, { buffer = bufnr, desc = "LSP format" })
         end
     end,
 })

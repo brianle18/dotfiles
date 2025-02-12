@@ -22,16 +22,22 @@ g.nvim_tree_respect_buf_cwd = 1
 
 -- Telescope mappings
 local telescope = require("telescope.builtin")
-vim.keymap.set("n", "<leader>ff", telescope.find_files, {})
-vim.keymap.set("n", "<leader>fg", require("telescope_multigrep"), {})
-vim.keymap.set("n", "<leader>fw", telescope.grep_string, {})
-vim.keymap.set("n", "<leader>fb", telescope.buffers, {})
-vim.keymap.set("n", "<leader>fh", telescope.help_tags, {})
-vim.keymap.set("n", "<leader>fc", telescope.commands, {})
-vim.keymap.set("n", "<leader>fr", telescope.lsp_definitions, {})
-vim.keymap.set("n", "<leader>fr", telescope.lsp_references, {})
-vim.keymap.set("n", "<leader>fn", "<cmd>Telescope notify<CR>", {})
-vim.keymap.set("n", "<leader>fa", "<cmd>lua vim.lsp.buf.code_action()<CR>", {})
+vim.keymap.set("n", "<leader>ff", telescope.find_files, { desc = "Find files (Telescope)" })
+vim.keymap.set(
+    "n",
+    "<leader>fg",
+    require("telescope_multigrep"),
+    { desc = "Grep in files (double space for file regex)(Telescope)" }
+)
+vim.keymap.set("n", "<leader>fw", telescope.grep_string, { desc = "Grep current word (Telescope)" })
+vim.keymap.set("n", "<leader>fb", telescope.buffers, { desc = "Find buffers (Telescope)" })
+vim.keymap.set("n", "<leader>fh", telescope.help_tags, { desc = "Find help tags (Telescope)" })
+vim.keymap.set("n", "<leader>fc", telescope.commands, { desc = "Find commands (Telescope)" })
+vim.keymap.set("n", "<leader>fd", telescope.lsp_definitions, { desc = "Find definitions (Telescope)" })
+vim.keymap.set("n", "<leader>fr", telescope.lsp_references, { desc = "Find references (Telescope)" })
+vim.keymap.set("n", "<leader>fk", telescope.keymaps, { desc = "Find keymaps (Telescope)" })
+vim.keymap.set("n", "<leader>fn", "<cmd>Telescope notify<CR>", { desc = "Find notifications (Telescope)" })
+vim.keymap.set("n", "<leader>fa", "<cmd>lua vim.lsp.buf.code_action()<CR>", { desc = "Find code actions" })
 -- code actions
 require("telescope").setup({
     extensions = {
@@ -39,20 +45,6 @@ require("telescope").setup({
             require("telescope.themes").get_dropdown({
                 -- even more opts
             }),
-
-            -- pseudo code / specification for writing custom displays, like the one
-            -- for "codeactions"
-            -- specific_opts = {
-            --   [kind] = {
-            --     make_indexed = function(items) -> indexed_items, width,
-            --     make_displayer = function(widths) -> displayer
-            --     make_display = function(displayer) -> function(e)
-            --     make_ordinal = function(e) -> string
-            --   },
-            --   -- for example to disable the custom builtin "codeactions" display
-            --      do the following
-            --   codeactions = false,
-            -- }
         },
     },
 })
@@ -86,4 +78,4 @@ require("nvim-tree").setup({
 
 -- OIL
 require("oil").setup()
-vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory with OIL" })
