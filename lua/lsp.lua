@@ -31,6 +31,7 @@ require("mason-lspconfig").setup({
         "html",
         "eslint",
         "lua_ls",
+        "tinymist",
     },
 })
 
@@ -56,6 +57,13 @@ require("lspconfig").elixirls.setup({
 -- TypeScript
 require("lspconfig").ts_ls.setup({
     filetypes = { "typescript", "typescriptreact" },
+    on_attach = on_attach,
+    capabilities = capabilities,
+})
+
+-- TinyMist
+require("lspconfig").tinymist.setup({
+    filetypes = { "typst" },
     on_attach = on_attach,
     capabilities = capabilities,
 })

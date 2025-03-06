@@ -33,6 +33,7 @@ require("conform").setup({
         json = { "jq" },
         elixir = { "mix" },
         python = { "ruff_format" },
+        typst = { "prettypst" },
         ["*"] = { "injected", "trim_whitespace", "remove_trailing_lines" }, -- enables injected-lang formatting for all filetypes
     },
     format_on_save = {
@@ -42,6 +43,10 @@ require("conform").setup({
     },
     quiet = true,
     formatters = {
+        prettypst = {
+            command = "prettypst",
+            args = { "--use-std-in", "--use-std-out", "--style=otbs", "--file-location=-" },
+        },
         stylua = {
             command = "stylua",
             args = { "--indent-type", "Spaces", "--indent-width", "4", "-" },

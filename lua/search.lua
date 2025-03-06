@@ -22,6 +22,7 @@ g.nvim_tree_respect_buf_cwd = 1
 
 -- Telescope mappings
 local telescope = require("telescope.builtin")
+vim.keymap.set("n", "tt", "<cmd>Telescope<CR>", { desc = "Quick open telescope" })
 vim.keymap.set("n", "<leader>ff", telescope.find_files, { desc = "Find files (Telescope)" })
 vim.keymap.set(
     "n",
