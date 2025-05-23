@@ -34,6 +34,10 @@ require("conform").setup({
         elixir = { "mix" },
         python = { "ruff_format" },
         typst = { "prettypst" },
+        javascript = { "prettierd", "prettier" },
+        javascriptreact = { "prettierd", "prettier" },
+        typescript = { "prettierd", "prettier" },
+        typescriptreact = { "prettierd", "prettier" },
         ["*"] = { "injected", "trim_whitespace", "remove_trailing_lines" }, -- enables injected-lang formatting for all filetypes
     },
     format_on_save = {

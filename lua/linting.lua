@@ -1,8 +1,8 @@
 -- Linting only
 local linter = require("lint")
 linter.linters_by_ft = {
-    javascript = { "eslint" },
-    typescript = { "eslint" },
+    javascript = { "eslint_d" },
+    typescript = { "eslint_d" },
     python = { "mypy", "ruff" },
     sql = { "sqlfluff" },
 }

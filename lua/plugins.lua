@@ -219,6 +219,7 @@ require("lazy").setup({
             },
         },
     },
+    { "augmentcode/augment.vim" },
 
     -- Trailing whitespace
     {

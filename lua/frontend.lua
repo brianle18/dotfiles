@@ -2,7 +2,7 @@
 
 -- nx actions for codegen
 require("nx").setup({
-    nx_cmd_root = "yarn nx",
+    nx_cmd_root = "pnpm nx",
     command_runner = require("nx.command-runners").terminal_cmd(),
     form_renderer = require("nx.form-renderers").telescope(),
     read_init = true,

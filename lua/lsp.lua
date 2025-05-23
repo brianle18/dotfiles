@@ -22,18 +22,18 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- Installer for LSP servers
 require("mason").setup()
-require("mason-lspconfig").setup({
-    ensure_installed = {
-        "elixirls",
-        "ts_ls",
-        "pyright",
-        "ruff",
-        "html",
-        "eslint",
-        "lua_ls",
-        "tinymist",
-    },
-})
+-- require("mason-lspconfig").setup({
+--     ensure_installed = {
+--         "elixirls",
+--         "ts_ls",
+--         "pyright",
+--         "ruff",
+--         "html",
+--         "eslint",
+--         "lua_ls",
+--         "tinymist",
+--     },
+-- })
 
 -- LSP configs
 -- Elixir
@@ -118,6 +118,23 @@ require("lspconfig").sqlls.setup({
 -- Vimscript
 require("lspconfig").vimls.setup({
     filetypes = { "vim" },
+    capabilities = capabilities,
+    on_attach = on_attach,
+})
+
+-- Dockerfile
+require("lspconfig").dockerls.setup({
+    filetypes = { "dockerfile" },
+    capabilities = capabilities,
+    on_attach = on_attach,
+})
+
+-- GraphQL
+require("lspconfig").graphql.setup({
+    settings = {
+        schema = "https://localhost:4003/graphql",
+    },
+    filetypes = { "graphql", "javascriptreact", "typescriptreact", "typescript" },
     capabilities = capabilities,
     on_attach = on_attach,
 })

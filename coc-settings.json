@@ -16,14 +16,4 @@
     "Lua.diagnostics.globals": ["vim"],
     "sql.database": "postgresql",
     "sqlfluff.dialect": "postgres",
-    "languageserver": {
-      "graphql": {
-        "command": "graphql-lsp",
-        "args": ["server", "-m", "stream"],
-        "filetypes": ["typescript", "typescriptreact", "graphql"],
-        "settings": {
-            "graphql-config.load.legacy": true
-        }
-      }
-    }
 }
