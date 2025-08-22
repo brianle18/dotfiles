@@ -26,45 +26,45 @@ o.softtabstop = 4
 
 -- Conform for formatting
 require("conform").setup({
-    log_level = vim.log.levels.DEBUG,
-    formatters_by_ft = {
-        lua = { "stylua" },
-        sql = { "sqlfluff" },
-        json = { "jq" },
-        elixir = { "mix" },
-        python = { "ruff_format" },
-        typst = { "prettypst" },
-        javascript = { "prettierd", "prettier" },
-        javascriptreact = { "prettierd", "prettier" },
-        typescript = { "prettierd", "prettier" },
-        typescriptreact = { "prettierd", "prettier" },
-        ["*"] = { "injected", "trim_whitespace", "remove_trailing_lines" }, -- enables injected-lang formatting for all filetypes
+  log_level = vim.log.levels.DEBUG,
+  formatters_by_ft = {
+    lua = { "stylua" },
+    sql = { "sqlfluff" },
+    json = { "jq" },
+    elixir = { "mix" },
+    python = { "ruff_format" },
+    typst = { "prettypst" },
+    javascript = { "biome" },
+    javascriptreact = { "biome" },
+    typescript = { "biome" },
+    typescriptreact = { "biome" },
+    ["*"] = { "injected", "trim_whitespace", "remove_trailing_lines" }, -- enables injected-lang formatting for all filetypes
+  },
+  format_on_save = {
+    -- I recommend these options. See :help conform.format for details.
+    lsp_format = "fallback",
+    timeout_ms = 10000,
+  },
+  quiet = true,
+  formatters = {
+    prettypst = {
+      command = "prettypst",
+      args = { "--use-std-in", "--use-std-out", "--style=otbs", "--file-location=-" },
     },
-    format_on_save = {
-        -- I recommend these options. See :help conform.format for details.
-        lsp_format = "fallback",
-        timeout_ms = 10000,
+    stylua = {
+      command = "stylua",
+      args = { "--indent-type", "Spaces", "--indent-width", "4", "-" },
     },
-    quiet = true,
-    formatters = {
-        prettypst = {
-            command = "prettypst",
-            args = { "--use-std-in", "--use-std-out", "--style=otbs", "--file-location=-" },
-        },
-        stylua = {
-            command = "stylua",
-            args = { "--indent-type", "Spaces", "--indent-width", "4", "-" },
-        },
-        sqlfluff = {
-            command = "/opt/homebrew/Caskroom/miniforge/base/bin/sqlfluff",
-            args = { "format", "-", "--dialect", "postgres", "--ignore", "templating" },
-            require_cwd = false,
-            inherit = false,
-        },
-        mix = {
-            command = "mix",
-            args = { "format", "-" },
-            cwd = require("conform.util").root_file({ ".envrc" }),
-        },
+    sqlfluff = {
+      command = "/opt/homebrew/Caskroom/miniforge/base/bin/sqlfluff",
+      args = { "format", "-", "--dialect", "postgres", "--ignore", "templating" },
+      require_cwd = false,
+      inherit = false,
     },
+    mix = {
+      command = "mix",
+      args = { "format", "-" },
+      cwd = require("conform.util").root_file({ ".envrc" }),
+    },
+  },
 })

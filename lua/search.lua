@@ -21,6 +21,7 @@ o.hlsearch = true
 g.nvim_tree_respect_buf_cwd = 1
 
 -- Telescope mappings
+require("telescope").load_extension("noice")
 local telescope = require("telescope.builtin")
 vim.keymap.set("n", "tt", "<cmd>Telescope<CR>", { desc = "Quick open telescope" })
 vim.keymap.set("n", "<leader>ff", telescope.find_files, { desc = "Find files (Telescope)" })
@@ -37,6 +38,8 @@ vim.keymap.set("n", "<leader>fc", telescope.commands, { desc = "Find commands (T
 vim.keymap.set("n", "<leader>fd", telescope.lsp_definitions, { desc = "Find definitions (Telescope)" })
 vim.keymap.set("n", "<leader>fr", telescope.lsp_references, { desc = "Find references (Telescope)" })
 vim.keymap.set("n", "<leader>fk", telescope.keymaps, { desc = "Find keymaps (Telescope)" })
+vim.keymap.set("n", "<leader>fws", telescope.lsp_workspace_symbols, { desc = "Find workspace symbols (Telescope)" })
+vim.keymap.set("n", "<leader>fds", telescope.lsp_document_symbols, { desc = "Find workspace symbols (Telescope)" })
 vim.keymap.set("n", "<leader>fn", "<cmd>Telescope notify<CR>", { desc = "Find notifications (Telescope)" })
 vim.keymap.set("n", "<leader>fa", "<cmd>lua vim.lsp.buf.code_action()<CR>", { desc = "Find code actions" })
 -- code actions
@@ -78,5 +81,19 @@ require("nvim-tree").setup({
 })
 
 -- OIL
-require("oil").setup()
+require("oil").setup({
+    columns = {
+        "icon",
+        "size",
+        "mtime",
+    },
+})
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory with OIL" })
+-- Set up a keymap to re-sort by time
+vim.keymap.set("n", "<leader>st", function()
+    require("oil").set_sort({ { "mtime", "desc" } })
+end, { desc = "Sort OIL view by time" })
+-- Set up a keymap to re-sort by name
+vim.keymap.set("n", "<leader>sn", function()
+    require("oil").set_sort({ { "name", "desc" } })
+end, { desc = "Sort OIL view by name" })

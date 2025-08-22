@@ -192,23 +192,23 @@ require("lazy").setup({
             "ibhagwan/fzf-lua", -- for file_selector provider fzf
             "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
             "zbirenbaum/copilot.lua", -- for providers='copilot'
-            {
-                -- support for image pasting
-                "HakonHarnes/img-clip.nvim",
-                event = "VeryLazy",
-                opts = {
-                    -- recommended settings
-                    default = {
-                        embed_image_as_base64 = false,
-                        prompt_for_file_name = false,
-                        drag_and_drop = {
-                            insert_mode = true,
-                        },
-                        -- required for Windows users
-                        use_absolute_path = true,
-                    },
-                },
-            },
+            -- {
+            -- -- support for image pasting
+            -- "HakonHarnes/img-clip.nvim",
+            -- event = "VeryLazy",
+            -- opts = {
+            --     -- recommended settings
+            --     default = {
+            --         embed_image_as_base64 = false,
+            --         prompt_for_file_name = false,
+            --         drag_and_drop = {
+            --             insert_mode = true,
+            --         },
+            --         -- required for Windows users
+            --         use_absolute_path = true,
+            --     },
+            -- },
+            -- },
             {
                 -- Make sure to set this up properly if you have lazy=true
                 "MeanderingProgrammer/render-markdown.nvim",
@@ -252,6 +252,30 @@ require("lazy").setup({
         end,
     },
 
+    -- Command line
+    {
+        "folke/noice.nvim",
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "rcarriga/nvim-notify",
+        },
+        opts = {
+            lsp = {
+                override = {
+                    ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                    ["vim.lsp.util.stylize_markdown"] = true,
+                },
+            },
+            presets = {
+                bottom_search = true,
+                command_palette = true,
+                long_message_to_split = true,
+                inc_rename = false,
+                lsp_doc_border = false,
+            },
+        },
+    },
+
     -----------------------
     -- LANGUAGE-SPECIFIC --
     -----------------------
@@ -283,5 +307,17 @@ require("lazy").setup({
     {
         "mhinz/vim-mix-format",
         lazy = false,
+    },
+
+    -- MCP Hub
+    {
+        "ravitemer/mcphub.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+        build = "npm install -g mcp-hub@latest", -- Installs `mcp-hub` node binary globally
+        config = function()
+            require("mcphub").setup()
+        end,
     },
 })
