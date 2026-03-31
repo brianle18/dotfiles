@@ -12,15 +12,11 @@ require("nvim-treesitter.configs").setup({
         "markdown",
         "markdown_inline",
         "comment",
-        "elixir",
-        "heex",
-        "eex",
         "html",
         "css",
         "javascript",
         "typescript",
         "tsx",
-        "css",
     },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)

@@ -9,3 +9,20 @@
   arguments: (argument_list
     (string (string_content) @injection.content (#set! injection.language "sql"))))
 
+; ;; extends
+
+; (
+;   (call
+;     function: (attribute
+;       object: (_)
+;       attribute: (identifier) @_method
+;     )
+;     arguments: (argument_list
+;       (string) @injection.content
+;     )
+;   )
+;   (#vim-match? @_method "^(execute|read_sql|sql|query)$")
+;   (#set! injection.language "sql")
+;   (#set! injection.include-children)
+; )
+
