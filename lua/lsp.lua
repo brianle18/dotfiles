@@ -1,6 +1,10 @@
 -- Nvim LSP configuration
+local lsp_status = require("lsp-status")
+lsp_status.register_progress()
+
 -- Generic LSP bindings
 local on_attach = function(client, bufnr)
+    lsp_status.on_attach(client)
     local opts = { noremap = true, silent = true }
 
     vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
@@ -18,7 +22,7 @@ local on_attach = function(client, bufnr)
 end
 
 -- setting up the elixir language server
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local capabilities = vim.tbl_extend("keep", require("cmp_nvim_lsp").default_capabilities(), lsp_status.capabilities)
 
 -- Installer for LSP servers
 require("mason").setup()
@@ -110,6 +114,8 @@ vim.lsp.config("basedpyright", {
             venv = ".venv",
         },
     },
+    cmd = { "basedpyright-langserver", "--stdio" },
+    root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" },
     filetypes = { "python" },
     on_attach = on_attach,
     capabilities = capabilities,
@@ -117,17 +123,84 @@ vim.lsp.config("basedpyright", {
 vim.lsp.enable("basedpyright")
 
 vim.lsp.config("ruff", {
-    settings = {
-        cmd = { "/opt/homebrew/Caskroom/miniforge/base/envs/notebooks/bin/ruff", "server" },
-    },
+    cmd = { "ruff", "server" },
+    root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
     filetypes = { "python" },
     on_attach = on_attach,
     capabilities = capabilities,
 })
 vim.lsp.enable("ruff")
 
+-- Trial - fix later
+-- -- Use `uv run <tool>` when uv.lock exists in the project tree, else fall back to the global binary.
+-- -- cmd is resolved at buffer-open time so each project gets the right executable.
+-- local function uv_or_global(tool, args, fallback)
+--     local uv_lock = vim.fn.findfile("uv.lock", vim.fn.expand("%:p:h") .. ";")
+--     if uv_lock ~= "" and vim.fn.executable("uv") == 1 then
+--         local cmd = { "uv", "run", tool }
+--         if args then vim.list_extend(cmd, args) end
+--         return cmd
+--     end
+--     return fallback
+-- end
+
+-- vim.api.nvim_create_autocmd("FileType", {
+--     pattern = "python",
+--     callback = function()
+--         vim.lsp.start({
+--             name = "basedpyright",
+--             cmd = uv_or_global(
+--                 "basedpyright-langserver",
+--                 { "--stdio" },
+--                 { "/Users/brian/.asdf/installs/python/3.14.3t/bin/basedpyright-langserver", "--stdio" }
+--             ),
+--             settings = { python = { venv = ".venv" } },
+--             root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" },
+--             on_attach = on_attach,
+--             capabilities = capabilities,
+--         })
+--         vim.lsp.start({
+--             name = "ruff",
+--             cmd = uv_or_global(
+--                 "ruff",
+--                 { "server" },
+--                 { "/Users/brian/.asdf/installs/python/3.14.3t/bin/ruff", "server" }
+--             ),
+--             root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
+--             on_attach = on_attach,
+--             capabilities = capabilities,
+--         })
+--     end,
+-- })
+
 -- Lua
 vim.lsp.config("lua_ls", {
+    cmd = { "lua-language-server" },
+    filetypes = { "lua" },
+    on_init = function(client)
+        if client.workspace_folders then
+            local path = client.workspace_folders[1].name
+            if
+                path ~= vim.fn.stdpath("config")
+                and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+            then
+                return
+            end
+        end
+        client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
+            runtime = {
+                version = "LuaJIT",
+                path = { "lua/?.lua", "lua/?/init.lua" },
+            },
+            workspace = {
+                checkThirdParty = false,
+                library = {
+                    vim.env.VIMRUNTIME,
+                    vim.api.nvim_get_runtime_file("lua/lspconfig", false)[1],
+                },
+            },
+        })
+    end,
     settings = {
         Lua = {
             diagnostics = {
@@ -148,14 +221,25 @@ vim.lsp.enable("html")
 
 -- SQL
 vim.lsp.config("sqlls", {
-    filetypes = { "sql" },
+    cmd = { "sql-language-server", "up", "--method", "stdio" },
+    filetypes = { "sql", "mysql" },
     settings = {
-        adapter = "postgres",
+        adapter = "mysql",
     },
     capabilities = capabilities,
     on_attach = on_attach,
 })
 vim.lsp.enable("sqlls")
+
+-- DBT
+vim.lsp.config("dbtls", {
+    cmd = { "dbt-language-server" },
+    filetypes = { "sql", "yaml" },
+    root_markers = { "dbt_project.yml" },
+    capabilities = capabilities,
+    on_attach = on_attach,
+})
+vim.lsp.enable("dbtls")
 
 -- Vimscript
 vim.lsp.config("vimls", {
@@ -164,6 +248,16 @@ vim.lsp.config("vimls", {
     on_attach = on_attach,
 })
 vim.lsp.enable("vimls")
+
+-- Bash
+vim.lsp.config("bashls", {
+    cmd = { "bash-language-server", "start" },
+    filetypes = { "sh", "bash", "env" },
+    root_markers = { ".git" },
+    capabilities = capabilities,
+    on_attach = on_attach,
+})
+vim.lsp.enable("bashls")
 
 -- Dockerfile
 vim.lsp.config("dockerls", {
@@ -184,6 +278,16 @@ vim.lsp.config("graphql", {
 })
 vim.lsp.enable("graphql")
 
+-- Ruby
+vim.lsp.config("ruby_lsp", {
+    cmd = { "ruby-lsp" },
+    filetypes = { "ruby", "eruby" },
+    root_markers = { "Gemfile", ".git" },
+    capabilities = capabilities,
+    on_attach = on_attach,
+})
+vim.lsp.enable("ruby_lsp")
+
 -- GitHub Actions
 vim.lsp.config("gh_actions_ls", {
     filetypes = { "yaml" },
@@ -191,6 +295,14 @@ vim.lsp.config("gh_actions_ls", {
     on_attach = on_attach,
 })
 vim.lsp.enable("gh_actions_ls")
+
+-- vim.lsp.config("mmdc_ls", {
+--     cmd = { "mmdc-ls" },
+--     filetypes = { "markdown" },
+--     capabilities = capabilities,
+--     on_attach = on_attach,
+-- })
+-- vim.lsp.enable("mmdc_ls")
 
 -- local util = require("lspconfig.util")
 -- local lspconfig = vim.lsp.config

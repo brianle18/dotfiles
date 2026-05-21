@@ -1,5 +1,5 @@
 -- Treesitter configurations
-require("nvim-treesitter.configs").setup({
+require("nvim-treesitter").setup({
     -- A list of parser names, or "all"
     ensure_installed = {
         "c",
@@ -17,6 +17,8 @@ require("nvim-treesitter.configs").setup({
         "javascript",
         "typescript",
         "tsx",
+        "sql",
+        "jinja",
     },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
@@ -110,6 +112,19 @@ require("nvim-treesitter.configs").setup({
 require("Comment").setup({
     pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
 })
+
+vim.keymap.set("n", "<leader>ts", function()
+    vim.treesitter.start()
+end, { desc = "Start treesitter (injected highlighting)" })
+
+-- Dotenv filetype detection
+vim.filetype.add({
+    pattern = {
+        ["%.env.*"] = "dotenv",
+        ["%.env.*.example"] = { "conf", { priority = 1 } },
+    },
+})
+vim.treesitter.language.register("bash", "dotenv")
 
 -- Context commentstring
 vim.g.skip_ts_context_commentstring_module = true
