@@ -60,6 +60,11 @@ vim.keymap.set("n", "gs", function()
     end, 0)
 end, { noremap = true, silent = true })
 
+-- CSV view toggle
+vim.keymap.set("n", "<leader>cv", function()
+    require("csvview").toggle()
+end, { desc = "Toggle CSV view" })
+
 -- Map \u toggle undo-tree
 map("n", "<leader>u", ":UndotreeToggle<CR>", opts)
 

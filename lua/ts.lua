@@ -18,7 +18,6 @@ require("nvim-treesitter").setup({
         "typescript",
         "tsx",
         "sql",
-        "jinja",
     },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
@@ -125,6 +124,18 @@ vim.filetype.add({
     },
 })
 vim.treesitter.language.register("bash", "dotenv")
+
+-- Force treesitter active for all supported filetypes.
+-- syntax.vim re-enables vim syntax via FileType autocmd AFTER nvim-treesitter,
+-- causing treesitter to step aside. vim.schedule defers until all FileType
+-- handlers have run, then we reclaim highlighting.
+vim.api.nvim_create_autocmd("FileType", {
+    callback = function()
+        vim.schedule(function()
+            pcall(vim.treesitter.start)
+        end)
+    end,
+})
 
 -- Context commentstring
 vim.g.skip_ts_context_commentstring_module = true

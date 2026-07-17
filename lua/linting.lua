@@ -3,8 +3,10 @@ local linter = require("lint")
 linter.linters_by_ft = {
     javascript = { "biomejs" },
     typescript = { "biomejs" },
+    json = { "biomejs" },
+    jsonc = { "biomejs" },
     python = { "mypy", "ruff" },
-    sql = { "sqlfluff" },
+    -- sql = { "sqlfluff" },
     env = { "dotenv_linter" },
 }
 

@@ -43,6 +43,25 @@ require("lazy").setup({
     -- Git tools,
     "tpope/vim-fugitive",
     "airblade/vim-gitgutter",
+    {
+        "isakbm/gitgraph.nvim",
+        dependencies = { "sindrets/diffview.nvim" },
+        ---@type I.GGConfig
+        opts = {
+            hooks = {
+                -- Check diff of a commit
+                on_select_commit = function(commit)
+                    vim.notify("DiffviewOpen " .. commit.hash .. "^!")
+                    vim.cmd(":DiffviewOpen " .. commit.hash .. "^!")
+                end,
+                -- Check diff from commit a -> commit b
+                on_select_range_commit = function(from, to)
+                    vim.notify("DiffviewOpen " .. from.hash .. "~1.." .. to.hash)
+                    vim.cmd(":DiffviewOpen " .. from.hash .. "~1.." .. to.hash)
+                end,
+            },
+        },
+    },
 
     -- Diff tool,
     "will133/vim-dirdiff",
@@ -107,12 +126,27 @@ require("lazy").setup({
         end,
         ft = { "markdown" },
     },
+    {
+        "kevalin/mermaid.nvim",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+        config = function()
+            require("mermaid").setup()
+
+            -- Install the Tree-sitter parser:
+            -- :TSInstall mermaid
+        end,
+    },
 
     -- LSP stuff
-    { "nvim-treesitter/nvim-treesitter", dependencies = { "JoosepAlviste/nvim-ts-context-commentstring" } },
+    {
+        "nvim-treesitter/nvim-treesitter",
+        lazy = false,
+        dependencies = { "JoosepAlviste/nvim-ts-context-commentstring" },
+        branch = "main",
+    },
     { "neoclide/coc.nvim", branch = "release" },
     { "elixir-lsp/coc-elixir", run = "yarn install && yarn prepack" },
-    "nvim-treesitter/playground",
+    -- "nvim-treesitter/playground",
     {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
@@ -123,6 +157,9 @@ require("lazy").setup({
         lazy = {
             inlay_hints = { enabled = false },
         },
+    },
+    {
+        "nvim-lua/lsp-status.nvim",
     },
 
     -- Linter
@@ -178,7 +215,7 @@ require("lazy").setup({
         event = "VeryLazy",
         lazy = false,
         version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
-        build = "make",
+        build = 'cargo build --release --features=luajit -p avante-tokenizers -p avante-templates -p avante-repo-map -p avante-html2md && for f in target/release/libavante_*.dylib; do cp "$f" "lua/$(basename $f | sed s/^lib//g | sed s/.dylib/.so/g)"; done',
         -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
@@ -192,6 +229,7 @@ require("lazy").setup({
             "ibhagwan/fzf-lua", -- for file_selector provider fzf
             "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
             "zbirenbaum/copilot.lua", -- for providers='copilot'
+            "folke/snacks.nvim",
             -- {
             -- -- support for image pasting
             -- "HakonHarnes/img-clip.nvim",
@@ -230,6 +268,22 @@ require("lazy").setup({
                 palette = {
                     markdown = { tws = "RosyBrown" },
                     other = { tws = "PaleVioletRed" },
+                },
+            })
+        end,
+    },
+
+    -- Obsidian
+    {
+        "epwalsh/obsidian.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+        config = function()
+            require("obsidian").setup({
+                dir = "~/Documents/Rejected Items/",
+                daily_notes = {
+                    folder = "Daily",
                 },
             })
         end,
@@ -285,6 +339,15 @@ require("lazy").setup({
         dependencies = {
             "nvim-telescope/telescope.nvim",
         },
+    },
+
+    -- CSV
+    {
+        "hat0uma/csvview.nvim",
+        ft = { "csv", "tsv" },
+        config = function()
+            require("csvview").setup()
+        end,
     },
 
     -- SQL

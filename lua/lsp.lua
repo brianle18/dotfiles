@@ -229,7 +229,7 @@ vim.lsp.config("sqlls", {
     capabilities = capabilities,
     on_attach = on_attach,
 })
-vim.lsp.enable("sqlls")
+-- vim.lsp.enable("sqlls")
 
 -- DBT
 vim.lsp.config("dbtls", {
@@ -239,7 +239,7 @@ vim.lsp.config("dbtls", {
     capabilities = capabilities,
     on_attach = on_attach,
 })
-vim.lsp.enable("dbtls")
+-- vim.lsp.enable("dbtls")
 
 -- Vimscript
 vim.lsp.config("vimls", {

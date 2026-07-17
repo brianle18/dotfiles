@@ -42,7 +42,10 @@ vim.keymap.set("n", "<leader>fws", telescope.lsp_workspace_symbols, { desc = "Fi
 vim.keymap.set("n", "<leader>fds", telescope.lsp_document_symbols, { desc = "Find workspace symbols (Telescope)" })
 vim.keymap.set("n", "<leader>fn", "<cmd>Telescope notify<CR>", { desc = "Find notifications (Telescope)" })
 vim.keymap.set("n", "<leader>fa", "<cmd>lua vim.lsp.buf.code_action()<CR>", { desc = "Find code actions" })
--- code actions
+vim.keymap.set("n", "<leader>fo", "<cmd>ObsidianSearch<CR>", { desc = "Search in Obsidian" })
+vim.keymap.set("n", "<leader>ft", function()
+    telescope.colorscheme({ enable_preview = true })
+end, { desc = "Pick colorscheme with live preview (Telescope)" })
 require("telescope").setup({
     extensions = {
         ["ui-select"] = {

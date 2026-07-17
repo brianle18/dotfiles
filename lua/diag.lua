@@ -1,6 +1,17 @@
 -- For diagnostic lines
 local keyset = vim.keymap.set
-vim.diagnostic.config({ virtual_text = false })
+-- vim.diagnostic.config({ virtual_text = false, float = { source = "always" } })
+vim.diagnostic.config({
+    virtual_text = {
+        source = "always", -- Show LSP source in virtual text (e.g., "pyright: Unused variable")
+        prefix = "●",
+    },
+    float = {
+        source = "always", -- Show LSP source in floating window (via :lua vim.diagnostic.open_float())
+    },
+})
+-- alias :lua vim.diagnostic.open_float()
+keyset("n", "<leader>sd", vim.diagnostic.open_float, { desc = "Open diagnostics float" })
 keyset("n", "<leader>ll", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
 vim.keymap.set("n", "<Space>d", function()
     vim.diagnostic.enable(not vim.diagnostic.is_enabled())

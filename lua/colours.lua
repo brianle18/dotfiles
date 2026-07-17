@@ -14,12 +14,6 @@ g.gruvbox_material_background = "hard"
 g.gruvbox_material_better_performance = 1
 g.gruvbox_material_diagnostic_virtual_text = "colored"
 vim.cmd("colorscheme gruvbox-material")
-vim.api.nvim_create_autocmd("ColorScheme", {
-    callback = function()
-        vim.api.nvim_set_hl(0, "@error.sql", {})
-    end,
-})
-vim.api.nvim_set_hl(0, "@error.sql", {})
 
 local lsp_failed = {}
 

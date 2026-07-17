@@ -26,45 +26,45 @@ o.softtabstop = 4
 
 -- Conform for formatting
 require("conform").setup({
-  log_level = vim.log.levels.DEBUG,
-  formatters_by_ft = {
-    lua = { "stylua" },
-    sql = { "sqlfluff" },
-    json = { "jq" },
-    elixir = { "mix" },
-    python = { "ruff_format" },
-    typst = { "prettypst" },
-    javascript = { "biome" },
-    javascriptreact = { "biome" },
-    typescript = { "biome" },
-    typescriptreact = { "biome" },
-    ["*"] = { "injected", "trim_whitespace", "remove_trailing_lines" }, -- enables injected-lang formatting for all filetypes
-  },
-  format_on_save = {
-    -- I recommend these options. See :help conform.format for details.
-    lsp_format = "fallback",
-    timeout_ms = 10000,
-  },
-  quiet = true,
-  formatters = {
-    prettypst = {
-      command = "prettypst",
-      args = { "--use-std-in", "--use-std-out", "--style=otbs", "--file-location=-" },
+    log_level = vim.log.levels.DEBUG,
+    formatters_by_ft = {
+        lua = { "stylua" },
+        -- sql = { "sqlfluff" },
+        json = { "jq" },
+        elixir = { "mix" },
+        python = { "ruff_format" },
+        typst = { "prettypst" },
+        javascript = { "prettierd" },
+        javascriptreact = { "prettierd" },
+        typescript = { "prettierd" },
+        typescriptreact = { "prettierd" },
+        ["*"] = { "injected", "trim_whitespace" }, -- enables injected-lang formatting for all filetypes
     },
-    stylua = {
-      command = "stylua",
-      args = { "--indent-type", "Spaces", "--indent-width", "4", "-" },
+    format_on_save = {
+        -- I recommend these options. See :help conform.format for details.
+        lsp_format = "fallback",
+        timeout_ms = 10000,
     },
-    sqlfluff = {
-      command = "/opt/homebrew/Caskroom/miniforge/base/bin/sqlfluff",
-      args = { "format", "-", "--dialect", "postgres", "--ignore", "templating" },
-      require_cwd = false,
-      inherit = false,
+    quiet = true,
+    formatters = {
+        prettypst = {
+            command = "prettypst",
+            args = { "--use-std-in", "--use-std-out", "--style=otbs", "--file-location=-" },
+        },
+        stylua = {
+            command = "stylua",
+            args = { "--indent-type", "Spaces", "--indent-width", "4", "-" },
+        },
+        sqlfluff = {
+            command = "sqlfluff",
+            args = { "format", "-", "--dialect", "snowflake", "--ignore", "templating" },
+            require_cwd = false,
+            inherit = false,
+        },
+        mix = {
+            command = "mix",
+            args = { "format", "-" },
+            cwd = require("conform.util").root_file({ ".envrc" }),
+        },
     },
-    mix = {
-      command = "mix",
-      args = { "format", "-" },
-      cwd = require("conform.util").root_file({ ".envrc" }),
-    },
-  },
 })
