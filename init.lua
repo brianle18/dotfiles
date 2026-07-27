@@ -6,7 +6,7 @@ require("diag")
 -- code parsing/actions
 require("lsp")
 require("linting")
-require("coc")
+-- require("coc")
 require("ts")
 require("search")
 require("telescope_multigrep")
