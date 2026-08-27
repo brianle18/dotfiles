@@ -44,8 +44,30 @@ require("lazy").setup({
     "tpope/vim-fugitive",
     "airblade/vim-gitgutter",
     {
+        -- Pulled in as a gitgraph dependency, specified here to set default_args.
+        -- lazy.nvim merges both specs by repo name.
+        "sindrets/diffview.nvim",
+        opts = {
+            default_args = {
+                -- Hide untracked files in the working-tree diff.
+                DiffviewOpen = { "-uno" },
+            },
+        },
+    },
+    {
         "isakbm/gitgraph.nvim",
         dependencies = { "sindrets/diffview.nvim" },
+        -- The plugin registers no user command, so a key is the only entry point.
+        -- Not <leader>gl, which mappings.lua already takes for :diffget LOCAL.
+        keys = {
+            {
+                "<leader>gg",
+                function()
+                    require("gitgraph").draw({}, { all = true, max_count = 5000 })
+                end,
+                desc = "GitGraph - Draw",
+            },
+        },
         ---@type I.GGConfig
         opts = {
             hooks = {
@@ -208,6 +230,27 @@ require("lazy").setup({
 
     -- Copilot
     { "github/copilot.vim" },
+
+    -- Image viewing (Kitty graphics protocol -- works in Ghostty)
+    {
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
+        ---@type snacks.Config
+        opts = {
+            image = {
+                enabled = true,
+                doc = {
+                    -- inline images in markdown/html/etc
+                    enabled = true,
+                    inline = true,
+                    float = true,
+                    max_width = 80,
+                    max_height = 40,
+                },
+            },
+        },
+    },
 
     -- Claude Code integration
     {
@@ -386,9 +429,24 @@ require("lazy").setup({
     {
         "hat0uma/csvview.nvim",
         ft = { "csv", "tsv" },
-        config = function()
-            require("csvview").setup()
-        end,
+        ---@module "csvview"
+        ---@type CsvView.Options
+        opts = {
+            parser = { comments = { "#", "//" } },
+            -- Excel-like navigation. All buffer-local to an active csvview, and
+            -- all count-aware -- 5<Tab> moves five fields, 3<CR> three rows.
+            keymaps = {
+                -- Field text objects: dif, cif, yaf, vif ...
+                textobject_field_inner = { "if", mode = { "o", "x" } },
+                textobject_field_outer = { "af", mode = { "o", "x" } },
+                -- Horizontal, cursor landing on the field end.
+                jump_next_field_end = { "<Tab>", mode = { "n", "v" } },
+                jump_prev_field_end = { "<S-Tab>", mode = { "n", "v" } },
+                -- Vertical, staying in the current column.
+                jump_next_row = { "<Enter>", mode = { "n", "v" } },
+                jump_prev_row = { "<S-Enter>", mode = { "n", "v" } },
+            },
+        },
     },
 
     -- SQL
