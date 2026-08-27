@@ -42,10 +42,10 @@ require("avante").setup({
             incoming = "DiffAdd",
         },
     },
-    system_prompt = function()
-        local hub = require("mcphub").get_hub_instance()
-        return hub and hub:get_active_servers_prompt() or ""
-    end,
+    -- system_prompt = function()
+    --     local hub = require("mcphub").get_hub_instance()
+    --     return hub and hub:get_active_servers_prompt() or ""
+    -- end,
     -- Using function prevents requiring mcphub before it's loaded
     custom_tools = function()
         return {

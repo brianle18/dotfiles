@@ -1,6 +1,13 @@
 ---------------------------------------------
 -- Toggle keys
 ---------------------------------------------
+-- NvimTree by default
+--vim.api.nvim_create_autocmd("VimEnter", {
+--    callback = function()
+--        vim.cmd("NvimTreeOpen")
+--    end,
+--})
+
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
@@ -10,18 +17,26 @@ function toggleln()
     end
 
     if vim.b.lnstatus == "number" then
-        vim.o.number = false
-        vim.o.relativenumber = false
+        vim.wo.number = false
+        vim.wo.relativenumber = false
         vim.b.lnstatus = "nonumber"
     else
-        vim.o.number = true
-        vim.o.relativenumber = true
+        vim.wo.number = true
+        vim.wo.relativenumber = false -- Changed from true to false
         vim.b.lnstatus = "number"
     end
 end
 
 -- Use \l to toggle the relative line number display.
 map("", "<leader>l", ":lua toggleln()<CR>", opts)
+vim.keymap.set('n', '<leader>tl', function()
+    if vim.wo.relativenumber then
+        vim.wo.relativenumber = false
+        vim.wo.number = true
+    else
+        vim.wo.relativenumber = true
+    end
+end, { desc = 'Switch relative and absolute line numbers' })
 
 -- -- Use \m to toggle mouse
 map("n", "<leader>m", ':exec &mouse!=""? "set mouse=" : "set mouse=nv"<CR>', opts)

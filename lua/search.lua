@@ -66,6 +66,10 @@ g.loaded_netrwPlugin = 1
 
 -- OR setup with some options
 require("nvim-tree").setup({
+    sort = {
+        sorter = "filetype",
+        folders_first = true,
+    },
     sort_by = "case_sensitive",
     view = {
         adaptive_size = true,

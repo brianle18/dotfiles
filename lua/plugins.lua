@@ -202,7 +202,7 @@ require("lazy").setup({
     },
 
     -- Formatters
-    "jose-elias-alvarez/null-ls.nvim",
+    -- "jose-elias-alvarez/null-ls.nvim",
     "MunifTanjim/prettier.nvim",
     "stevearc/conform.nvim",
 
@@ -229,7 +229,7 @@ require("lazy").setup({
     { "tpope/vim-unimpaired" },
 
     -- Copilot
-    { "github/copilot.vim" },
+    -- { "github/copilot.vim" },
 
     -- Image viewing (Kitty graphics protocol -- works in Ghostty)
     {
@@ -312,7 +312,7 @@ require("lazy").setup({
             "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
             "ibhagwan/fzf-lua", -- for file_selector provider fzf
             "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-            "zbirenbaum/copilot.lua", -- for providers='copilot'
+            -- "zbirenbaum/copilot.lua", -- for providers='copilot'
             "folke/snacks.nvim",
             -- {
             -- -- support for image pasting
@@ -359,7 +359,7 @@ require("lazy").setup({
 
     -- Obsidian
     {
-        "epwalsh/obsidian.nvim",
+        -- "epwalsh/obsidian.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
@@ -472,14 +472,14 @@ require("lazy").setup({
     },
 
     -- MCP Hub
-    {
-        "ravitemer/mcphub.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
-        build = "npm install -g mcp-hub@latest", -- Installs `mcp-hub` node binary globally
-        config = function()
-            require("mcphub").setup()
-        end,
-    },
+    -- {
+    --     "ravitemer/mcphub.nvim",
+    --     dependencies = {
+    --         "nvim-lua/plenary.nvim",
+    --     },
+    --     build = "npm install -g mcp-hub@latest", -- Installs `mcp-hub` node binary globally
+    --     config = function()
+    --         require("mcphub").setup()
+    --     end,
+    -- },
 })

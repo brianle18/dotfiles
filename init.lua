@@ -1,6 +1,7 @@
 require("plugins")
 -- looks and functionality
 require("colours")
+require("options")
 require("mappings")
 require("diag")
 -- code parsing/actions
@@ -17,7 +18,7 @@ require("snippet")
 require("frontend")
 require("elixir")
 require("languages")
-require("autocomplete")
+--require("autocomplete")
 require("sql")
 require("ai_tools")
 require("mcp_servers")
