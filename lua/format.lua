@@ -34,10 +34,10 @@ require("conform").setup({
         elixir = { "mix" },
         python = { "ruff_format" },
         typst = { "prettypst" },
-        javascript = { "prettierd" },
-        javascriptreact = { "prettierd" },
-        typescript = { "prettierd" },
-        typescriptreact = { "prettierd" },
+        javascript = { "biome" },
+        javascriptreact = { "biome" },
+        typescript = { "biome" },
+        typescriptreact = { "biome" },
         ["*"] = { "injected", "trim_whitespace" }, -- enables injected-lang formatting for all filetypes
     },
     format_on_save = {
@@ -47,6 +47,10 @@ require("conform").setup({
     },
     quiet = true,
     formatters = {
+        biome = {
+            command = require("conform.util").from_node_modules("biome"),
+            args = { "format", "--write", "--stdin-file-path", "$FILENAME" },
+        },
         prettypst = {
             command = "prettypst",
             args = { "--use-std-in", "--use-std-out", "--style=otbs", "--file-location=-" },

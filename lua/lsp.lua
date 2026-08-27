@@ -72,12 +72,20 @@ vim.lsp.config("elixirls", {
 vim.lsp.enable("elixirls")
 
 -- TypeScript
-vim.lsp.config("ts_ls", {
+-- vim.lsp.config("ts_ls", {
+--     cmd = { "typescript-language-server", "--stdio" },
+--     filetypes = { "typescript", "typescriptreact" },
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+-- })
+-- vim.lsp.enable("ts_ls")
+vim.lsp.config("tsc", {
+    cmd = { "tsc", "--lsp", "--stdio" },
     filetypes = { "typescript", "typescriptreact" },
     on_attach = on_attach,
     capabilities = capabilities,
 })
-vim.lsp.enable("ts_ls")
+vim.lsp.enable("tsc")
 
 -- TypeScript
 vim.lsp.config("biome", {
